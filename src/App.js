@@ -14,12 +14,18 @@ function App() {
   ]);
 
   const [title, setTitle] = useState('');
-  const bodyInputRef = useRef();
+  const [body, setBody] = useState('');
 
   const addNewPost = (e) => {
     e.preventDefault();
-		console.log(title);
-		console.log(bodyInputRef.current.value);
+    const newPost = {
+      id: Date.now(),
+      title,
+      body,
+    };
+    setPosts([...posts, newPost]);
+    setTitle('');
+    setBody('')
   };
 
   return (
@@ -32,8 +38,12 @@ function App() {
           type="text"
           placeholder="Название поста"
         />
-        {/*НЕуправляемый/Неконтроллируемый компоненнт*/}
-        <MyInput ref={bodyInputRef} type="text" placeholder="Описание поста" />
+        <MyInput
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          type="text"
+          placeholder="Описание поста"
+        />
         <MyButton onClick={addNewPost}>Создать пост</MyButton>
       </form>
       <PostList posts={posts} title="Посты про JS" />
