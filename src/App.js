@@ -18,8 +18,8 @@ function App() {
 
   return (
     <div className="App">
-      <PostList posts={posts} title="Список постов 1" />
-      <PostList posts={posts2} title="Список постов 2" />
+      <PostList posts={posts} title="Посты про JS" />
+      <PostList posts={posts2} title="Посты про Python" />
     </div>
   );
 }
