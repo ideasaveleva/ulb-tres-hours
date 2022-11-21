@@ -1,25 +1,25 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 #root {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .App {
-	width: 800px;
+  width: 800px;
 }
 
 .post {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 15px;
-	border: 2px solid teal;
-	margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid teal;
+  margin-top: 15px;
 }
 
 .post-enter {
@@ -35,4 +35,17 @@
 .post-exit-active {
   transform: translateX(-350px);
   transition: all 500ms ease-in;
+}
+.page__wrapper {
+  margin-top: 30px;
+  display: flex;
+}
+.page {
+  padding: 10px;
+  border: 1px solid teal;
+  cursor: pointer;
+}
+.page__current {
+  border: 2px solid orange;
+	font-weight: bold;
 }
