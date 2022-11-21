@@ -14,8 +14,8 @@ export const PostForm = ({ create, errorCreatePost }) => {
     };
     create(newPost);
     setPost({ title: '', body: '' });
-  };
-console.log(errorCreatePost);
+	};
+	
   return (
     <form>
       {/*Управляемый компоненнт*/}
