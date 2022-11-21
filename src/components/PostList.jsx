@@ -9,11 +9,17 @@ export default function PostList({ posts, title, remove }) {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{title}</h1>
+			<h1 style={{ textAlign: 'center', marginTop: '20px' }}>
+				{title}
+			</h1>
       <TransitionGroup>
         {posts.map((post, index) => (
-          <CSSTransition key={post.id} timeout={500} classNames="post">
-            <PostItem remove={remove} number={index + 1} post={post} />
+					<CSSTransition
+						key={post.id}
+						timeout={500}
+						classNames="post"
+					>
+            <PostItem remove={remove} number={index + 1} post={post}/>
           </CSSTransition>
         ))}
       </TransitionGroup>

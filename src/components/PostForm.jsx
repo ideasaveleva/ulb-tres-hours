@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MyButton } from './UI/button/MyButton';
 import { MyInput } from './UI/input/MyInput';
 
-export const PostForm = ({create}) => {
+export const PostForm = ({ create, errorCreatePost }) => {
   const [post, setPost] = useState({ title: '', body: '' });
 
   const addNewPost = (e) => {
@@ -11,11 +11,11 @@ export const PostForm = ({create}) => {
     const newPost = {
       ...post,
       id: Date.now(),
-		};
-		create(newPost)
+    };
+    create(newPost);
     setPost({ title: '', body: '' });
   };
-
+console.log(errorCreatePost);
   return (
     <form>
       {/*Управляемый компоненнт*/}
@@ -31,7 +31,10 @@ export const PostForm = ({create}) => {
         type="text"
         placeholder="Описание поста"
       />
-      <MyButton onClick={addNewPost}>Создать пост</MyButton>
+      {errorCreatePost && <h4 style={{ color: 'red' }}>Заполните все поля!</h4>}
+      <MyButton style={{ marginTop: '10px' }} onClick={addNewPost}>
+        Создать пост
+      </MyButton>
     </form>
   );
 };
