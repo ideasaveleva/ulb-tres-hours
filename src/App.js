@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './styles/App.css';
 import { usePosts } from './hooks/usePosts';
+import { useFetching } from './hooks/useFetching';
 import PostService from './API/PostService';
 import PostList from './components/PostList';
 import { PostForm } from './components/PostForm';
@@ -8,8 +9,8 @@ import { PostFilter } from './components/PostFilter';
 import { MyModal } from './components/UI/MyModal/MyModal';
 import { MyButton } from './components/UI/button/MyButton';
 import { Loader } from './components/UI/loader/Loader';
-import { useFetching } from './hooks/useFetching';
 import { getPageCount, getPagesArray } from './styles/pages';
+import { Pagination } from './components/UI/pagination/Pagination.jsx';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -20,8 +21,6 @@ function App() {
   const [page, setPage] = useState(1);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
   const [errorCreatePost, setErrorCreatePost] = useState(false);
-
-  let pagesArray = getPagesArray(totalPages);
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(
     async (limit, page) => {
@@ -90,17 +89,10 @@ function App() {
           title="Список постов"
         />
       )}
-      <div className="page__wrapper">
-        {pagesArray.map((p) => (
-          <span
-            onClick={() => changePage(p)}
-            key={p}
-            className={page === p ? 'page page__current' : 'page'}
-          >
-            {p}
-          </span>
-        ))}
-      </div>
+			<Pagination
+				page={page}
+				changePage={changePage}
+				totalPages={totalPages} />
     </div>
   );
 }
