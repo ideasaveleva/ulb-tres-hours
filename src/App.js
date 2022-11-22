@@ -23,12 +23,14 @@ function App() {
 
   let pagesArray = getPagesArray(totalPages);
 
-  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
-    const totalCount = response.headers['x-total-count'];
-    setTotalPages(getPageCount(totalCount, limit));
-  });
+  const [fetchPosts, isPostsLoading, postError] = useFetching(
+    async (limit, page) => {
+      const response = await PostService.getAll(limit, page);
+      setPosts(response.data);
+      const totalCount = response.headers['x-total-count'];
+      setTotalPages(getPageCount(totalCount, limit));
+    }
+  );
 
   const createPost = (newPost) => {
     if (newPost.title === '' || newPost.body === '') {
@@ -41,8 +43,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, [page]);
+    fetchPosts(limit, page);
+  }, []);
 
   // async function fetchPosts() {
   // 	setIsPostsLoadding(true)
@@ -56,9 +58,10 @@ function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
-	const changePage = (page) => {
-		setPage(page)
-	}
+  const changePage = (page) => {
+    setPage(page);
+    fetchPosts(limit, page);
+  };
 
   return (
     <div className="App">
