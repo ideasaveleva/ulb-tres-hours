@@ -4,10 +4,15 @@ import { Error } from '../pages/Error';
 import { privateRoutes, publicRoutes } from '../router/routes';
 import { Login } from '../pages/Login';
 import { AuthContext } from '../context';
+import { Loader } from './UI/loader/Loader';
 
 export const AppRouter = () => {
-	const { isAuth } = useContext(AuthContext);
+	const { isAuth, isLoading } = useContext(AuthContext);
 	console.log(isAuth);
+
+	if (isLoading) {
+		return <Loader/>
+	}
 
   return isAuth ? (
     <>
@@ -19,7 +24,7 @@ export const AppRouter = () => {
             path={route.path}
             exact={route.exact}
           />
-        ))}
+				))}
         <Route path="/login" element={<Navigate to="/posts" replace />} />
         <Route path="*" element={<Error />} />
       </Routes>
@@ -34,7 +39,7 @@ export const AppRouter = () => {
             path={route.path}
             exact={route.exact}
           />
-        ))}
+				))}
         <Route path="*" element={<Login />} />
       </Routes>
     </>
