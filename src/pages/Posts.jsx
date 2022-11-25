@@ -11,7 +11,7 @@ import { useFetching } from '../hooks/useFetching';
 import { usePosts } from '../hooks/usePosts';
 import { getPageCount } from '../styles/pages';
 
-function Posts() {
+export const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: '', query: '' });
   const [openModal, setOpenModal] = useState(false);
@@ -92,5 +92,3 @@ function Posts() {
     </div>
   );
 }
-
-export default Posts;

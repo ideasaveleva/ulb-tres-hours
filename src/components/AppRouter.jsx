@@ -1,20 +1,24 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { About } from '../pages/About';
-import Posts from '../pages/Posts';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Error } from '../pages/Error';
-import { PostIdPage } from '../pages/PostIdPage';
-import {Home} from'../pages/Home'
+import { routes } from '../router/routes';
 
 export const AppRouter = () => {
   return (
     <>
       <Routes>
-				<Route path="/" element={<Navigate to="/posts" replace />} />
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/about" element={<About />} />
-        <Route exact path="/posts" element={<Posts />} />
-        <Route exact path="/posts/:id" element={<PostIdPage />} />
+        <Route path="/" element={<Navigate to="/posts" replace />} />
+				{/* <Route path="/" element={<Home />} /> */}
+				
+        {routes.map((route) => (
+          <Route
+            key={route.path}
+            element={route.component}
+            path={route.path}
+            exact={route.exact}
+					/>
+        ))}
+        
         <Route path="*" element={<Error />} />
       </Routes>
     </>
