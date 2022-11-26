@@ -7,6 +7,7 @@ import { MyButton } from '../components/UI/button/MyButton';
 import { Loader } from '../components/UI/loader/Loader';
 import { MyModal } from '../components/UI/MyModal/MyModal';
 import { Pagination } from '../components/UI/pagination/Pagination.jsx';
+import { MySelect } from '../components/UI/select/MySelect';
 import { useFetching } from '../hooks/useFetching';
 import { useObserver } from '../hooks/useObserver';
 import { usePosts } from '../hooks/usePosts';
@@ -39,7 +40,7 @@ export const Posts = () => {
 
 	useEffect(() => {
     fetchPosts(limit, page);
-  }, [page]);
+  }, [page, limit]);
 
   const createPost = (newPost) => {
     if (newPost.title === '' || newPost.body === '') {
@@ -82,6 +83,17 @@ export const Posts = () => {
       </MyModal>
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
+      <MySelect
+        value={limit}
+        onChange={(value) => setLimit(value)}
+        defaultValue="Кол-во элементов на странице"
+        options={[
+          { value: 5, name: '5' },
+          { value: 10, name: '10' },
+          { value: 25, name: '25' },
+          { value: -1, name: 'Показать все' },
+        ]}
+      />
       {postError && <h1>Произошла ошибка ${postError}</h1>}
       <PostList
         remove={removePost}
