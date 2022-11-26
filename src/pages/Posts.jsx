@@ -8,6 +8,7 @@ import { Loader } from '../components/UI/loader/Loader';
 import { MyModal } from '../components/UI/MyModal/MyModal';
 import { Pagination } from '../components/UI/pagination/Pagination.jsx';
 import { useFetching } from '../hooks/useFetching';
+import { useObserver } from '../hooks/useObserver';
 import { usePosts } from '../hooks/usePosts';
 import { getPageCount } from '../styles/pages';
 
@@ -21,7 +22,6 @@ export const Posts = () => {
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
   const [errorCreatePost, setErrorCreatePost] = useState(false);
   const lastElement = useRef();
-  const observer = useRef();
   console.log(lastElement);
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(
@@ -33,6 +33,14 @@ export const Posts = () => {
     }
   );
 
+  useObserver(lastElement, page < totalPages, isPostsLoading, () => {
+    setPage(page + 1);
+  });
+
+	useEffect(() => {
+    fetchPosts(limit, page);
+  }, [page]);
+
   const createPost = (newPost) => {
     if (newPost.title === '' || newPost.body === '') {
       setErrorCreatePost(true);
@@ -43,23 +51,7 @@ export const Posts = () => {
     }
   };
 
-  useEffect(() => {
-		if (isPostsLoading) return;
-		if(observer.current) observer.current.disconnect()
-    var callback = function (entries, observer) {
-      if (entries[0].isIntersecting && page < totalPages) {
-        // console.log('Див в зоне видимости');
-        console.log(page);
-        setPage(page + 1);
-      }
-    };
-    observer.current = new IntersectionObserver(callback);
-    observer.current.observe(lastElement.current);
-  }, [isPostsLoading]);
-
-  useEffect(() => {
-    fetchPosts(limit, page);
-  }, [page]);
+  
 
   // async function fetchPosts() {
   // 	setIsPostsLoadding(true)
